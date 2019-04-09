@@ -68,3 +68,14 @@ def get_user(user_id):
     except ValueError:
         return jsonify(res), 404
 
+
+@users_blueprint.route('/users', methods=['GET'])
+def get_users():
+    """Gets the users"""
+    res = {
+        'status': 'success',
+        'data': {
+            'users': [user.to_json() for user in User.query.all()]
+        }
+    }
+    return jsonify(res), 200
