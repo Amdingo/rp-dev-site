@@ -14,6 +14,7 @@ def health_check():
         'message': 'healthy'
     })
 
+
 @users_blueprint.route('/users', methods=['POST'])
 def add_user():
     post = request.get_json()
