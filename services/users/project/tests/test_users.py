@@ -117,6 +117,5 @@ class TestUserService(BaseTestCase):
             self.assertIn('fail', data['status'])
 
 
-
 if __name__ == '__main__':
     unittest.main()
