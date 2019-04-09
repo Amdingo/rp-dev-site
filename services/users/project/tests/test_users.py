@@ -6,6 +6,13 @@ from project.api.models import User
 from project.tests.base import BaseTestCase
 
 
+def add_user(username, email):
+    user = User(username, email)
+    db.session.add(user)
+    db.session.commit()
+    return user
+
+
 class TestUserService(BaseTestCase):
     """User Service tests"""
 
@@ -87,9 +94,7 @@ class TestUserService(BaseTestCase):
 
     def test_single_user(self):
         """Want a user, get a user"""
-        u = User(username='rick', email='rsanchez@randm.com')
-        db.session.add(u)
-        db.session.commit()
+        add_user('rick', 'rsanchez@randm.com')
         with self.client:
             res = self.client.get(f'/users/{u.id}')
             data = json.loads(res.data.decode())
