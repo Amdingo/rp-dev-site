@@ -5,6 +5,7 @@ class BaseConfig:
     """Basic configuration for extension"""
     TESTING = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SECRET_KEY = 'my_precious'
 
 
 class DevConfig(BaseConfig):
