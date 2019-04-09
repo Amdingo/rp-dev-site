@@ -39,7 +39,7 @@ class TestUserService(BaseTestCase):
                 data=json.dumps({}),
                 content_type='application/json',
             )
-            data = json.loads(res.data.decode)
+            data = json.loads(res.data.decode())
             self.assertEqual(res.status_code, 400)
             self.assertIn('Invalid payload', data['message'])
             self.assertIn('fail', data['status'])
@@ -54,7 +54,7 @@ class TestUserService(BaseTestCase):
                 }),
                 content_type='application/json',
             )
-            data = json.loads(res.data.decode)
+            data = json.loads(res.data.decode())
             self.assertEqual(res.status_code, 400)
             self.assertIn('Invalid payload', data['message'])
             self.assertIn('fail', data['status'])
@@ -78,7 +78,7 @@ class TestUserService(BaseTestCase):
                 }),
                 content_type='application/json',
             )
-            data = json.loads(res.data.decode)
+            data = json.loads(res.data.decode())
             self.assertEqual(res.status_code, 400)
             self.assertIn('Sorry, that email address is already in use.', data['message'])
             self.assertIn('fail', data['status'])
