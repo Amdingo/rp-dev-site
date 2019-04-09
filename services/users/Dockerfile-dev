@@ -1,0 +1,15 @@
+# base
+FROM python:3.7.2-alpine
+
+# set working dir
+WORKDIR /usr/src/app
+
+# copy requirements.txt and install
+COPY ./requirements.txt /usr/src/app/requirements.txt
+RUN pip install -r requirements.txt
+
+# copy app
+COPY . /usr/src/app
+
+# run
+CMD python manage.py run -h 0.0.0.0
