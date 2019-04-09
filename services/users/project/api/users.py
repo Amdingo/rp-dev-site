@@ -41,3 +41,30 @@ def add_user():
     except exc.IntegrityError:
         db.session.rollback()
         return jsonify(res), 400
+
+
+@users_blueprint.route('/users/<user_id>', methods=['GET'])
+def get_user(user_id):
+    """Get user details"""
+    res = {
+        'status': 'fail',
+        'message': 'User does not exist'
+    }
+    try:
+        user = User.query.filter_by(id=int(user_id)).first()
+        if not user:
+            return jsonify(res), 404
+        else:
+            res = {
+                'status': 'success',
+                'data': {
+                    'id': user.id,
+                    'username': user.username,
+                    'email': user.email,
+                    'active': user.active
+                }
+            }
+            return jsonify(res), 200
+    except ValueError:
+        return jsonify(res), 404
+
