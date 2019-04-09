@@ -1,6 +1,12 @@
 # base
 FROM python:3.7.2-alpine
 
+# install build dependencies
+RUN apk update && \
+    apk add --virtual build-deps gcc python-dev musl-dev && \
+    apk add postgresql-dev && \
+    apk add netcat-openbsd
+
 # set working dir
 WORKDIR /usr/src/app
 
@@ -10,6 +16,9 @@ RUN pip install -r requirements.txt
 
 # copy app
 COPY . /usr/src/app
+
+# chmod entrypoint.sh
+RUN chmod +x /usr/src/app/entrypoint.sh
 
 # run
 CMD python manage.py run -h 0.0.0.0
