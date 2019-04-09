@@ -94,7 +94,7 @@ class TestUserService(BaseTestCase):
 
     def test_single_user(self):
         """Want a user, get a user"""
-        add_user('rick', 'rsanchez@randm.com')
+        u = add_user('rick', 'rsanchez@randm.com')
         with self.client:
             res = self.client.get(f'/users/{u.id}')
             data = json.loads(res.data.decode())
@@ -120,6 +120,20 @@ class TestUserService(BaseTestCase):
             self.assertEqual(res.status_code, 404)
             self.assertIn('User does not exist', data['message'])
             self.assertIn('fail', data['status'])
+
+    def test_get_all_users(self):
+        """Gets all the users"""
+        add_user('rick', 'rsanchez@randm.com')
+        add_user('morty', 'msmith@randm.com')
+        with self.client:
+            res = self.client.get('/users')
+            data = json.loads(res.data.decode())
+            self.assertEqual(res.status_code, 200)
+            self.assertEqual(len(data['data']['users']), 2)
+            self.assertIn('rick', data['data']['users'][0]['username'])
+            self.assertIn('rsanchez@randm.com', data['data']['users'][0]['email'])
+            self.assertIn('morty', data['data']['users'][1]['username'])
+            self.assertIn('msmith@randm.com', data['data']['users'][1]['email'])
 
 
 if __name__ == '__main__':
